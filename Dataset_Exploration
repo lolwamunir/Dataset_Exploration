@@ -1,0 +1,29 @@
+SELECT AVG(Price) AS Average_Price FROM cars;
+
+
+SELECT COUNT(*) AS Cars_Count 
+FROM cars 
+WHERE `Leather interior` = 'Yes' AND Price < 1400;
+
+
+SELECT MAX(Price) AS Max_Price 
+FROM cars 
+WHERE Manufacturer = 'TOYOTA' AND `Prod. year` = 2011;
+
+
+SELECT Manufacturer, AVG(Price) AS Avg_Price 
+FROM cars 
+GROUP BY Manufacturer 
+ORDER BY Avg_Price DESC;
+
+
+SELECT (COUNT(*) * 100 / (SELECT COUNT(*) FROM cars WHERE Category = 'Jeep')) AS Petrol_Jeep_Percentage
+FROM cars 
+WHERE Category = 'Jeep' AND `Fuel type` = 'Petrol';
+
+
+SELECT * FROM cars 
+WHERE Price = (SELECT MIN(Price) FROM cars);
+
+
+
