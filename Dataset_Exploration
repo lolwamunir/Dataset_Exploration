@@ -1,4 +1,10 @@
-SELECT AVG(Price) AS Average_Price FROM cars;
+```SELECT AVG(Price) AS average_price FROM exploration;
+
++------------------+
+| average_price |
++------------------+
+|         0.00      |
++------------------+
 
 
 SELECT COUNT(*) AS Cars_Count 
@@ -25,5 +31,5 @@ WHERE Category = 'Jeep' AND `Fuel type` = 'Petrol';
 SELECT * FROM cars 
 WHERE Price = (SELECT MIN(Price) FROM cars);
 
-
+```
 
