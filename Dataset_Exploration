@@ -1,35 +1,101 @@
-```SELECT AVG(Price) AS average_price FROM exploration;
+SELECT AVG(Price) AS average_price FROM train;
 
 +------------------+
-| average_price |
+| average_price    |
 +------------------+
-|         0.00      |
+|   15793.2239     |
 +------------------+
 
 
-SELECT COUNT(*) AS Cars_Count 
-FROM cars 
+
+SELECT COUNT(*) AS num_cars
+FROM train
 WHERE `Leather interior` = 'Yes' AND Price < 1400;
 
-
-SELECT MAX(Price) AS Max_Price 
-FROM cars 
-WHERE Manufacturer = 'TOYOTA' AND `Prod. year` = 2011;
-
-
-SELECT Manufacturer, AVG(Price) AS Avg_Price 
-FROM cars 
-GROUP BY Manufacturer 
-ORDER BY Avg_Price DESC;
++-----------+
+| num_cars  |
++-----------+
+|    52     |
++-----------+
 
 
-SELECT (COUNT(*) * 100 / (SELECT COUNT(*) FROM cars WHERE Category = 'Jeep')) AS Petrol_Jeep_Percentage
-FROM cars 
-WHERE Category = 'Jeep' AND `Fuel type` = 'Petrol';
+SELECT MAX(Price) AS max_price
+FROM train
+WHERE Manufacturer = 'Toyota'  AND 'Prod. year' = 2011;
+
++-----------+
+| max_price |
++-----------+
+|    NULL   |
++-----------+
 
 
-SELECT * FROM cars 
-WHERE Price = (SELECT MIN(Price) FROM cars);
+SELECT Manufacturer, AVG(Price) AS average_price
+FROM train
+GROUP BY Manufacturer
+ORDER BY average_price DESC;
 
-```
++-------------------+------------------+
+| Manufacturer      | average_price    |
++-------------------+------------------+
+| SSANGYONG         | 33559.6667       |
+| HYUNDAI           | 26189.9500       |
+| PORSCHE           | 19177.4000       |
+| LEXUS             | 18783.0714       |
+| SUZUKI            | 15681.0000       |
+| FORD              | 15001.4286       |
+| TOYOTA            | 15000.3519       |
+| MERCEDES - BENZ   | 13970.7917       |
+| KIA               | 13015.0000       |
+| MITSUBISHI        | 12387.7500       |
+| HONDA             | 10299.4444       |
+| NISSAN            | 9911.5556        |
+| AUDI              | 9198.6000        |
+| CHEVROLET         | 8425.4167        |
+| VOLKSWAGEN        | 8033.3750        |
+| DAEWOO            | 6981.0000        |
+| BMW               | 6549.6250        |
+| JEEP              | 6000.0000        |
+| GMC               | 5488.0000        |
+| INFINITI          | 5488.0000        |
+| OPEL              | 5210.0000        |
+| FIAT              | 4900.5000        |
+| ALFA ROMEO        | 3700.0000        |
+| RENAULT           | 3450.0000        |
+| MAZDA             | 1764.0000        |
+| SUBARU            | 549.0000         |
++-------------------+------------------+
+
+
+SELECT (COUNT(*) * 100 / (SELECT COUNT(*) FROM train WHERE Manufacturer = 'Jeep')) AS petrol_fuel_jeep
+FROM train
+WHERE Manufacturer = 'Jeep' AND `Fuel type` = 'Petrol';
+
++----------------+
+|petrol_fuel_jeep|
++----------------+
+|    100.0000    |
++----------------+
+
+
+SELECT * FROM train
+WHERE Price = (SELECT MIN(Price) FROM train);
+
++------------+-------+------+--------------+----------+------------+----------+------------------+-----------+---------------+-----------+-----------+---------------+--------------+----------+--------------+-------+---------|
+| ID         | Price | Levy | Manufacturer | Model    | Prod. year | Category | Leather interior | Fuel type | Engine volume | Mileage   | Cylinders | Gear box type | Drive wheels | Doors    | Wheel        | Color | Airbags |
++------------+-------+------+--------------+----------+------------+----------+------------------+-----------+---------------+-----------+-----------+---------------+--------------+----------+--------------+-------+---------|
+| 45612423   |  3    | -    | HYUNDAI      | Elantra  | 2011       | Sedan    | Yes              | Petrol    | 1.8           | 80000 km  | 4         | Tiptronic     | Front        | 04 - May | Left wheel   | Grey  | 6       |
++------------+-------+------+--------------+----------+------------+----------+------------------+-----------+---------------+-----------+-----------+---------------+--------------+----------+--------------+-------+---------|
+
+
+SELECT (COUNT(*) * 100.0 / (SELECT COUNT(*) FROM train WHERE Manufacturer = 'Toyota')) AS percentage
+FROM train
+WHERE Manufacturer = 'Toyota' 
+AND Price > (SELECT AVG(Price) FROM train);
+
++--------------+
+| percentage   |
++--------------+
+|   40.74074   |
++--------------+
 
